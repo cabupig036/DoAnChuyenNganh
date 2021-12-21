@@ -140,7 +140,11 @@
 
     <!-- ======= Icon Boxes Section ======= -->
     <section id="icon-boxes" class="icon-boxes">
+<<<<<<< HEAD
      
+=======
+      
+>>>>>>> Thuy
     </section><!-- End Icon Boxes Section -->
 
     <!-- ======= About Us Section ======= -->
@@ -177,7 +181,10 @@
       </div>
     </section><!-- End About Us Section -->
 
+<<<<<<< HEAD
     
+=======
+>>>>>>> Thuy
   </main><!-- End #main -->
 
   <!-- ======= Footer ======= -->
