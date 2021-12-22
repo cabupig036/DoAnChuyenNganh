@@ -124,7 +124,7 @@
                                                 $query = mysqli_query($conn,$sql);	
                                                 $row = array();
                                                 while($data = mysqli_fetch_assoc($query)){
-                                                    $row[] = array($data['madh'],$data['tendh'],$data['tienthuho'],$data['tenNN'],$data['sdtNN'],$data['diachiNN'],$data['diachi']);
+                                                    $row[] = array($data['madh'],$data['tendh'],$data['tienthuho'],$data['tenNN'],$data['sdtNN'],$data['diachiNN'],$data['diachiNG']);
                                                 }
                                                 for($j=0;$j<count($row);$j++){                                                
                                             ?>
