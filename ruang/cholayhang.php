@@ -1,14 +1,6 @@
 <?php 
     include("./config/conndb.php"); 
-    //lay ma don hang tu form
-    if(isset($_POST['nhan'])&&($_POST['nhan'])){
-        $ma = $_POST['id'];
-    }
-    // var_dump(($_POST['nhan']));
-    //update lại cột trạng thái sau khi shipper nhận đơn, thành "chờ lấy hàng"    
-    $update = "update donhang set trangthai = 'Chờ lấy hàng' where madh = '$ma'";
-    $query = mysqli_query($conn,$update);
-    // var_dump($ma);
+   
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -41,7 +33,7 @@
             <hr class="sidebar-divider">
 
             <li class="nav-item">
-                <a class="nav-link" href="ui-colors.html">
+                <a class="nav-link" href="./nhandon.php">
                     <i class="fas fa-edit"></i>
                     <span>Lên đơn hàng</span>
                 </a>
@@ -55,7 +47,7 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <!-- <h6 class="collapse-header">Forms</h6> -->
                         <a class="collapse-item" href="form_basics.html">Chờ bàn giao</a>
-                        <a class="collapse-item active" href="form_advanceds.html">Chờ lấy hàng</a>
+                        <a class="collapse-item active" href="./cholayhang.php">Chờ lấy hàng</a>
                         <a class="collapse-item" href="form_advanceds.html">Đang giao</a>
                         <a class="collapse-item" href="form_advanceds.html">Hoàn tất</a>
                         <a class="collapse-item" href="form_advanceds.html">Hoàn hàng</a>
@@ -122,18 +114,19 @@
                                             <th>Địa chỉ bên nhận</th>
                                             <th></th>
                                         </tr>
-                                    </thead>
-                                    <!-- <tfoot>
-                        <tr>
-                          <th>Name</th>
-                          <th>Position</th>
-                          <th>Office</th>
-                          <th>Age</th>
-                          <th>Start date</th>
-                          <th>Salary</th>
-                        </tr>
-                      </tfoot> -->
+                                    </thead>                               
                                     <tbody>
+                                        <?php
+                                            //lấy các sp có trạng thái 'Đang chờ'
+                                            //thêm where makh (đăng nhập xong) hoac mashipper (KH voi shipper dung chung trang nay)
+                                                $sql="SELECT * from donhang JOIN khachhang ON donhang.makh=khachhang.makh WHERE trangthai='1'";
+                                                $query = mysqli_query($conn,$sql);	
+                                                $row = array();
+                                                while($data = mysqli_fetch_assoc($query)){
+                                                    $row[] = array($data['madh'],$data['tendh'],$data['tienthuho'],$data['tenNN'],$data['sdtNN'],$data['diachiNN'],$data['diachiNG']);
+                                                }
+                                                for($j=0;$j<count($row);$j++){                                                
+                                        ?>
                                         <tr>
                                             <td>Tiger Nixon</td>
                                             <td>System Architect</td>
@@ -141,37 +134,10 @@
                                             <td>61</td>
                                             <td>2011/04/25</td>
                                             <td>$320,800</td>
-                                            <td> <button type="button" class="btn btn-warning mb-1">Đã gửi hàng</button></td>
+                                            <!-- neu la shipper thi sua lai la Da nhan hang -->
+                                            <td> <td> <input type="submit" value="Đã gửi hàng" name="nhan" class="btn btn-warning mb-1"></td></td>
                                         </tr>
-                                        <tr>
-                                            <td>Garrett Winters</td>
-                                            <td>Accountant</td>
-                                            <td>Tokyo</td>
-                                            <td>63</td>
-                                            <td>2011/07/25</td>
-                                            <td>$170,750</td>
-                                            <td> <button type="button" class="btn btn-warning mb-1">Đã gửi hàng</button></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Ashton Cox</td>
-                                            <td>Junior Technical Author</td>
-                                            <td>San Francisco</td>
-                                            <td>66</td>
-                                            <td>2009/01/12</td>
-                                            <td>$86,000</td>
-                                            <td> <button type="button" class="btn btn-warning mb-1">Đã gửi hàng</button></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Cedric Kelly</td>
-                                            <td>Senior Javascript Developer</td>
-                                            <td>Edinburgh</td>
-                                            <td>22</td>
-                                            <td>2012/03/29</td>
-                                            <td>$433,060</td>
-                                            <td> <button type="button" class="btn btn-warning mb-1">Đã gửi hàng</button></td>
-                                        </tr>
-
-
+                                        <?php } ?>                                        
                                     </tbody>
                                 </table>
                             </div>

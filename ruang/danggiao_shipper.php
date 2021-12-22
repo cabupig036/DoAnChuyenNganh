@@ -1,3 +1,17 @@
+<?php 
+    include("./config/conndb.php"); 
+    //lay ma don hang tu form
+    if(isset($_POST['nhan'])&&($_POST['nhan'])){
+        $ma = $_POST['id'];
+        $tt = $_POST['trangthai'] + 1;
+    }
+    
+    // var_dump(($_POST['nhan']));
+    //update lại cột trạng thái sau khi shipper nhận đơn, thành "chờ lấy hàng"    
+    $update = "update donhang set trangthai = '$tt' where madh = '$ma'";
+    $query = mysqli_query($conn,$update);
+    var_dump($tt);
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -29,28 +43,27 @@
      
       <hr class="sidebar-divider">
       
-      <li class="nav-item active">
+      <li class="nav-item">
         <a class="nav-link" href="ui-colors.html">
           <i class="fas fa-edit"></i>
           <span>Nhận đơn hàng</span>
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseForm" aria-expanded="true"
-          aria-controls="collapseForm">
-          <i class="fab fa-fw fa-wpforms"></i>
-          <span>Quản lý giao hàng</span>
-        </a>
-        <div id="collapseForm" class="collapse" aria-labelledby="headingForm" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <!-- <h6 class="collapse-header">Forms</h6> -->
-            
-            <a class="collapse-item" href="form_advanceds.html">Đang giao</a>
-            <a class="collapse-item" href="form_advanceds.html">Giao thành công</a>
-            <a class="collapse-item" href="form_advanceds.html">Hoàn hàng</a>
-          </div>
-        </div>
-      </li>
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseForm" aria-expanded="true" aria-controls="collapseForm">
+                    <i class="fab fa-fw fa-wpforms"></i>
+                    <span>Quản lý giao hàng</span>
+                </a>
+                <div id="collapseForm" class="collapse" aria-labelledby="headingForm" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <!-- <h6 class="collapse-header">Forms</h6> -->
+                        <a class="collapse-item" href="./chonhanhang.php">Chờ lấy hàng</a>
+                        <a class="collapse-item  active" href="./danggiao_shipper.php">Đang giao</a>
+                        <a class="collapse-item" href="form_advanceds.html">Giao thành công</a>
+                        <a class="collapse-item" href="form_advanceds.html">Hoàn hàng</a>
+                    </div>
+                </div>
+            </li>
       
       <hr class="sidebar-divider">
       
@@ -102,7 +115,7 @@
             <div class="col-lg-12">
                 <div class="card mb-4">
                   <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-primary">Chờ bàn giao</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">Đang giao</h6>
                   </div>
                   <div class="table-responsive p-3">
                     <table class="table align-items-center table-flush" id="dataTable">
@@ -113,50 +126,40 @@
                           <th>Tiền thu hộ COD</th>
                           <th>Họ tên bên nhận</th>
                           <th>Số điện thoại bên nhận</th>
-                          <th>Địa chỉ bên nhận</th>   
-                          <th></th>                       
+                          <th>Địa chỉ bên nhận</th>  
+                          <th>Địa chỉ bên gửi</th> 
+                          <th></th>     
+                          <th></th>                  
                         </tr>
                       </thead>
                      
                       <tbody>
+                      <?php
+                        //lấy các sp có trạng thái 'Đang giao'
+                       
+                        $sql="SELECT * from donhang JOIN khachhang ON donhang.makh=khachhang.makh WHERE trangthai='3'";
+                        $query = mysqli_query($conn,$sql);	
+                        $row = array();
+                        while($data = mysqli_fetch_assoc($query)){
+                          $row[] = array($data['madh'],$data['tendh'],$data['tienthuho'],$data['tenNN'],$data['sdtNN'],$data['diachiNN'],$data['diachi'],$data['trangthai']);
+                        }
+                        for($j=0;$j<count($row);$j++){                                                
+                        ?>
+                        <form action="./updateTrangThai.php" method="post">
                         <tr>
-                          <td>Tiger Nixon</td>
-                          <td>System Architect</td>
-                          <td>Edinburgh</td>
-                          <td>61</td>
-                          <td>2011/04/25</td>
-                          <td>$320,800</td>
-                          <td> <button type="button" class="btn btn-warning mb-1">Nhận</button></td>
+                          <td><?php echo $row[$j][0]; ?></td>
+                          <td><?php echo $row[$j][1]; ?></td>
+                          <td><?php echo $row[$j][2]; ?></td>
+                          <td><?php echo $row[$j][3]; ?></td>
+                          <td><?php echo $row[$j][4]; ?></td>
+                          <td><?php echo $row[$j][5]; ?></td>
+                          <td><?php echo $row[$j][6]; ?></td>                         
+                          <td> <input type="submit" value="Xong" name="xong" class="btn btn-warning mb-1"></td>
+                          <td> <input type="submit" value="Hoàn" name="hoan" class="btn btn-warning mb-1"></td>
+                          <input type="hidden" name="id" value="<?php echo $row[$j][0]; ?>">
                         </tr>
-                        <tr>
-                          <td>Garrett Winters</td>
-                          <td>Accountant</td>
-                          <td>Tokyo</td>
-                          <td>63</td>
-                          <td>2011/07/25</td>
-                          <td>$170,750</td>
-                          <td> <button type="button" class="btn btn-warning mb-1">Nhận</button></td>
-                        </tr>
-                        <tr>
-                          <td>Ashton Cox</td>
-                          <td>Junior Technical Author</td>
-                          <td>San Francisco</td>
-                          <td>66</td>
-                          <td>2009/01/12</td>
-                          <td>$86,000</td>
-                          <td> <button type="button" class="btn btn-warning mb-1">Nhận</button></td>
-                        </tr>
-                        <tr>
-                          <td>Cedric Kelly</td>
-                          <td>Senior Javascript Developer</td>
-                          <td>Edinburgh</td>
-                          <td>22</td>
-                          <td>2012/03/29</td>
-                          <td>$433,060</td>
-                          <td> <button type="button" class="btn btn-warning mb-1">Nhận</button></td>
-                        </tr>
-                        
-                        
+                        </form>
+                        <?php } ?>
                       </tbody>
                     </table>
                   </div>

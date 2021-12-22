@@ -1,4 +1,15 @@
-<?php include('./config/conndb.php'); ?>
+<?php 
+    include("./config/conndb.php"); 
+    //lay ma don hang tu form
+    if(isset($_POST['nhan'])&&($_POST['nhan'])){
+        $ma = $_POST['id'];
+    }
+    // var_dump(($_POST['nhan']));
+    //update lại cột trạng thái sau khi shipper nhận đơn, thành "chờ lấy hàng"    
+    $update = "update donhang set trangthai = '1' where madh = '$ma'";
+    $query = mysqli_query($conn,$update);
+    // var_dump($ma);
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,8 +19,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link href="assets/img/favicon.png" rel="icon">
-    <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+    <!-- <link href="img/logo/logo.png" rel="icon"> -->
     <title>Anyar</title>
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
@@ -30,7 +40,7 @@
 
             <hr class="sidebar-divider">
 
-            <li class="nav-item active">
+            <li class="nav-item">
                 <a class="nav-link" href="./nhandon.php">
                     <i class="fas fa-edit"></i>
                     <span>Nhận đơn hàng</span>
@@ -44,7 +54,7 @@
                 <div id="collapseForm" class="collapse" aria-labelledby="headingForm" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <!-- <h6 class="collapse-header">Forms</h6> -->
-                        <a class="collapse-item " href="./chonhanhang.php">Chờ lấy hàng</a>
+                        <a class="collapse-item  active" href="./chonhanhang.php">Chờ lấy hàng</a>
                         <a class="collapse-item" href="./danggiao_shipper.php">Đang giao</a>
                         <a class="collapse-item" href="form_advanceds.html">Giao thành công</a>
                         <a class="collapse-item" href="form_advanceds.html">Hoàn hàng</a>
@@ -93,11 +103,10 @@
                 <!-- Container Fluid-->
                 <div class="container-fluid" id="container-wrapper">
 
-
                     <div class="col-lg-12">
                         <div class="card mb-4">
                             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                <h6 class="m-0 font-weight-bold text-primary">Chờ bàn giao</h6>
+                                <h6 class="m-0 font-weight-bold text-primary">Chờ lấy hàng</h6>
                             </div>
                             <div class="table-responsive p-3">
                                 <table class="table align-items-center table-flush" id="dataTable">
@@ -112,33 +121,35 @@
                                             <th>Địa chỉ bên gửi</th>
                                             <th></th>
                                         </tr>
-                                    </thead>
+                                    </thead>                               
                                     <tbody>
                                         <?php
-                                        //lấy các sp có trạng thái 'Đang chờ'
-                                        
-                                            $sql="SELECT * from donhang JOIN khachhang ON donhang.makh=khachhang.makh WHERE trangthai='0'";
-                                            $query = mysqli_query($conn,$sql);	
-                                            $row = array();
-                                            while($data = mysqli_fetch_assoc($query)){
-                                                $row[] = array($data['madh'],$data['tendh'],$data['tienthuho'],$data['tenNN'],$data['sdtNN'],$data['diachiNN'],$data['diachi']);
-                                            }
-                                            for($j=0;$j<count($row);$j++){                                                
+                                            //lấy các dh có trạng thái 'Đang chờ'
+                                           
+                                                $sql="SELECT * from donhang JOIN khachhang ON donhang.makh=khachhang.makh WHERE trangthai='1'";
+                                                $query = mysqli_query($conn,$sql);	
+                                                $row = array();
+                                                while($data = mysqli_fetch_assoc($query)){
+                                                    $row[] = array($data['madh'],$data['tendh'],$data['tienthuho'],$data['tenNN'],$data['sdtNN'],$data['diachiNN'],$data['diachi'],$data['trangthai']);
+                                                }
+                                                for($j=0;$j<count($row);$j++){                                                
                                         ?>
-                                        <form action="./chonhanhang.php" method="post">
-                                            <tr>                                            
-                                                <td><?php echo $row[$j][0]; ?></td>
-                                                <td><?php echo $row[$j][1]; ?></td>
-                                                <td><?php echo $row[$j][2]; ?></td>
-                                                <td><?php echo $row[$j][3]; ?></td>
-                                                <td><?php echo $row[$j][4]; ?></td>
-                                                <td><?php echo $row[$j][5]; ?></td>
-                                                <td><?php echo $row[$j][6]; ?></td>                                               
-                                                <td> <input type="submit" value="Nhận" name="nhan" class="btn btn-warning mb-1"></td>
-                                                <input type="hidden" name="id" value="<?php echo $row[$j][0]; ?>">
-                                            </tr>
-                                        </form>    
-                                        <?php } ?>                                
+                                        <form action="./danggiao_shipper.php" method="post">
+                                        <tr>
+                                            <td><?php echo $row[$j][0]; ?></td>
+                                            <td><?php echo $row[$j][1]; ?></td>
+                                            <td><?php echo $row[$j][2]; ?></td>
+                                            <td><?php echo $row[$j][3]; ?></td>
+                                            <td><?php echo $row[$j][4]; ?></td>
+                                            <td><?php echo $row[$j][5]; ?></td>
+                                            <td><?php echo $row[$j][6]; ?></td>      
+                                            
+                                            <td> <input type="submit" value="Đã nhận hàng" name="nhan" class="btn btn-warning mb-1"></td>
+                                            <input type="hidden" name="id" value="<?php echo $row[$j][0]; ?>">
+                                            <input type="hidden" name="trangthai" value="<?php echo $row[$j][7]; ?>">
+                                        </tr>
+                                        </form>
+                                        <?php } ?>                                        
                                     </tbody>
                                 </table>
                             </div>
