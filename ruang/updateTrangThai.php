@@ -1,5 +1,6 @@
 <?php 
     include("./config/conndb.php"); 
+    //================SHIPPER========================
     //cập nhật trạng thái sau khi shipper nhấn "Nhận"    
     if(isset($_POST['nhan'])&&($_POST['nhan'])){
         $ma = $_POST['id'];
@@ -29,5 +30,23 @@
         $query1 = mysqli_query($conn,$update1);
         header('location: donhoan_shipper.php');
     }
-    
+    //======================KHÁCH HÀNG==================
+    //tạo đơn mới
+    if(isset($_POST['tao'])&&($_POST['tao'])){
+        $htNG = $_POST['tuychon'];
+        //var_dump($ma);
+        // $update = "update donhang set trangthai = '1' where madh = '$ma'";
+        // $query = mysqli_query($conn,$update);
+        // header('location: chonhanhang.php');
+    }
+
+    //cập nhật lại trạng thái khi đã gửi hàng cho shipper
+    if(isset($_POST['guihang'])&&($_POST['guihang'])){
+        $ma = $_POST['id'];
+        $tt = $_POST['trangthai'] + 2;
+        $update = "update donhang set trangthai = '$tt' where madh = '$ma'";
+        $query = mysqli_query($conn,$update);
+        header('location: danggiao.php');
+       
+    }
 ?>

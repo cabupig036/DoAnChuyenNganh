@@ -30,7 +30,7 @@
             <hr class="sidebar-divider">
 
             <li class="nav-item">
-                <a class="nav-link" href="nhandon.html">
+                <a class="nav-link" href="./nhandon.php">
                     <i class="fas fa-edit"></i>
                     <span>Nhận đơn hàng</span>
                 </a>
@@ -43,10 +43,10 @@
                 <div id="collapseForm" class="collapse" aria-labelledby="headingForm" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <!-- <h6 class="collapse-header">Forms</h6> -->
-                        <a class="collapse-item" href="danggiao_shipper.html">Chờ lấy hàng</a>
-                        <a class="collapse-item" href="danggiao_shipper.html">Đang giao</a>
-                        <a class="collapse-item" href="giaothanhcong.html">Giao thành công</a>
-                        <a class="collapse-item" href="hoanhang.html">Hoàn hàng</a>
+                        <a class="collapse-item" href="./chonhanhang.php">Chờ lấy hàng</a>
+                        <a class="collapse-item" href="./danggiao_shipper.php">Đang giao</a>
+                        <a class="collapse-item" href="./giaothanhcong.php">Giao thành công</a>
+                        <a class="collapse-item" href="./donhoan_shipper.php">Hoàn hàng</a>
                     </div>
                 </div>
             </li>

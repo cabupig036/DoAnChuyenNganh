@@ -1,3 +1,6 @@
+<?php 
+    include("./config/conndb.php");    
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -29,7 +32,7 @@
       <hr class="sidebar-divider">
      
       <li class="nav-item">
-        <a class="nav-link" href="ui-colors.html">
+        <a class="nav-link" href="./lendon.php">
           <i class="fas fa-edit"></i>
           <span>Lên đơn hàng</span>
         </a>
@@ -43,10 +46,11 @@
         <div id="collapseForm" class="collapse" aria-labelledby="headingForm" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <!-- <h6 class="collapse-header">Forms</h6> -->
-            <a class="collapse-item " href="form_basics.html">Chờ bàn giao</a>
-            <a class="collapse-item" href="form_advanceds.html">Đang giao</a>
-            <a class="collapse-item " href="form_advanceds.html">Hoàn tất</a>
-            <a class="collapse-item active" href="form_advanceds.html">Hoàn hàng</a>
+            <a class="collapse-item " href="./chobangiao.php">Chờ bàn giao</a>
+            <a class="collapse-item" href="./cholayhang.php">Chờ lấy hàng</a>
+            <a class="collapse-item" href="./danggiao.php">Đang giao</a>
+            <a class="collapse-item " href="./hoantat.php">Hoàn tất</a>
+            <a class="collapse-item active" href="./hoanhang.php">Hoàn hàng</a>
           </div>
         </div>
       </li>
@@ -114,43 +118,33 @@
                           <th>Họ tên bên nhận</th>
                           <th>Số điện thoại bên nhận</th>
                           <th>Địa chỉ bên nhận</th>  
-                          <th>Lý do</th>                        
+                          <th>Địa chỉ bên gửi</th>
+                          <th></th>                          
                         </tr>
                       </thead>
                       <tbody>
-                        <tr>
-                          <td>Tiger Nixon</td>
-                          <td>System Architect</td>
-                          <td>Edinburgh</td>
-                          <td>61</td>
-                          <td>2011/04/25</td>
-                          <td>$320,800</td>
-                        </tr>
-                        <tr>
-                          <td>Garrett Winters</td>
-                          <td>Accountant</td>
-                          <td>Tokyo</td>
-                          <td>63</td>
-                          <td>2011/07/25</td>
-                          <td>$170,750</td>
-                        </tr>
-                        <tr>
-                          <td>Ashton Cox</td>
-                          <td>Junior Technical Author</td>
-                          <td>San Francisco</td>
-                          <td>66</td>
-                          <td>2009/01/12</td>
-                          <td>$86,000</td>
-                        </tr>
-                        <tr>
-                          <td>Cedric Kelly</td>
-                          <td>Senior Javascript Developer</td>
-                          <td>Edinburgh</td>
-                          <td>22</td>
-                          <td>2012/03/29</td>
-                          <td>$433,060</td>
-                        </tr>
-                        
+                      <?php                                           
+                        $sql="SELECT * from donhang JOIN khachhang ON donhang.makh=khachhang.makh WHERE trangthai='6'";
+                        $query = mysqli_query($conn,$sql);	
+                        $row = array();
+                        while($data = mysqli_fetch_assoc($query)){
+                          $row[] = array($data['madh'],$data['tendh'],$data['tienthuho'],$data['tenNN'],$data['sdtNN'],$data['diachiNN'],$data['diachi']);
+                        }
+                        for($j=0;$j<count($row);$j++){                                                
+                        ?>
+                          <form action="" method="post">
+                            <tr>                                            
+                              <td><?php echo $row[$j][0]; ?></td>
+                              <td><?php echo $row[$j][1]; ?></td>
+                              <td><?php echo $row[$j][2]; ?></td>
+                              <td><?php echo $row[$j][3]; ?></td>
+                              <td><?php echo $row[$j][4]; ?></td>
+                              <td><?php echo $row[$j][5]; ?></td>
+                              <td><?php echo $row[$j][6]; ?></td>                                               
+                                               
+                            </tr>
+                          </form>    
+                        <?php } ?> 
                         
                       </tbody>
                     </table>

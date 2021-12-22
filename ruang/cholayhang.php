@@ -1,6 +1,5 @@
 <?php 
-    include("./config/conndb.php"); 
-   
+    include("./config/conndb.php");    
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -112,31 +111,37 @@
                                             <th>Họ tên bên nhận</th>
                                             <th>Số điện thoại bên nhận</th>
                                             <th>Địa chỉ bên nhận</th>
-                                            <th></th>
+                                            <th>Địa chỉ bên gửi</th>
+                                            <th></th>                                            
                                         </tr>
                                     </thead>                               
                                     <tbody>
                                         <?php
                                             //lấy các sp có trạng thái 'Đang chờ'
                                             //thêm where makh (đăng nhập xong) hoac mashipper (KH voi shipper dung chung trang nay)
-                                                $sql="SELECT * from donhang JOIN khachhang ON donhang.makh=khachhang.makh WHERE trangthai='1'";
+                                                $sql="SELECT * from donhang JOIN khachhang ON donhang.makh=khachhang.makh WHERE trangthai='1' OR trangthai='2'";
                                                 $query = mysqli_query($conn,$sql);	
                                                 $row = array();
                                                 while($data = mysqli_fetch_assoc($query)){
-                                                    $row[] = array($data['madh'],$data['tendh'],$data['tienthuho'],$data['tenNN'],$data['sdtNN'],$data['diachiNN'],$data['diachiNG']);
+                                                    $row[] = array($data['madh'],$data['tendh'],$data['tienthuho'],$data['tenNN'],$data['sdtNN'],$data['diachiNN'],$data['diachi'],$data['trangthai']);
                                                 }
                                                 for($j=0;$j<count($row);$j++){                                                
                                         ?>
-                                        <tr>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
-                                            <td>61</td>
-                                            <td>2011/04/25</td>
-                                            <td>$320,800</td>
-                                            <!-- neu la shipper thi sua lai la Da nhan hang -->
-                                            <td> <td> <input type="submit" value="Đã gửi hàng" name="nhan" class="btn btn-warning mb-1"></td></td>
-                                        </tr>
+                                        <form action="./updateTrangThai.php" method="post">
+                                            <tr>
+                                                <td><?php echo $row[$j][0]; ?></td>
+                                                <td><?php echo $row[$j][1]; ?></td>
+                                                <td><?php echo $row[$j][2]; ?></td>
+                                                <td><?php echo $row[$j][3]; ?></td>
+                                                <td><?php echo $row[$j][4]; ?></td>
+                                                <td><?php echo $row[$j][5]; ?></td>
+                                                <td><?php echo $row[$j][6]; ?></td>        
+                                                <!-- neu la shipper thi sua lai la Da nhan hang -->
+                                                <td> <input type="submit" value="Đã gửi hàng" name="guihang" class="btn btn-warning mb-1"></td>
+                                                <input type="hidden" name="id" value="<?php echo $row[$j][0]; ?>">
+                                                <input type="hidden" name="trangthai" value="<?php echo $row[$j][7]; ?>">
+                                            </tr>
+                                        </form>
                                         <?php } ?>                                        
                                     </tbody>
                                 </table>

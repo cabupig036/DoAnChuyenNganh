@@ -122,7 +122,7 @@
                      
                       <tbody>
                       <?php
-                        $sql="SELECT * from donhang JOIN khachhang ON donhang.makh=khachhang.makh WHERE trangthai='4'";
+                        $sql="SELECT * from donhang JOIN khachhang ON donhang.makh=khachhang.makh WHERE trangthai='5'";
                         $query = mysqli_query($conn,$sql);	
                         $row = array();
                         while($data = mysqli_fetch_assoc($query)){
