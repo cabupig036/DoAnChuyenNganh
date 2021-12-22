@@ -46,8 +46,8 @@
                         <!-- <h6 class="collapse-header">Forms</h6> -->
                         <a class="collapse-item " href="./chonhanhang.php">Chờ lấy hàng</a>
                         <a class="collapse-item" href="./danggiao_shipper.php">Đang giao</a>
-                        <a class="collapse-item" href="form_advanceds.html">Giao thành công</a>
-                        <a class="collapse-item" href="form_advanceds.html">Hoàn hàng</a>
+                        <a class="collapse-item" href="./giaothanhcong.php">Giao thành công</a>
+                        <a class="collapse-item" href="./donhoan_shipper.php">Hoàn hàng</a>
                     </div>
                 </div>
             </li>
@@ -125,7 +125,7 @@
                                             }
                                             for($j=0;$j<count($row);$j++){                                                
                                         ?>
-                                        <form action="./chonhanhang.php" method="post">
+                                        <form action="./updateTrangThai.php" method="post">
                                             <tr>                                            
                                                 <td><?php echo $row[$j][0]; ?></td>
                                                 <td><?php echo $row[$j][1]; ?></td>

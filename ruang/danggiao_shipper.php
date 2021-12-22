@@ -1,16 +1,6 @@
 <?php 
     include("./config/conndb.php"); 
-    //lay ma don hang tu form
-    if(isset($_POST['nhan'])&&($_POST['nhan'])){
-        $ma = $_POST['id'];
-        $tt = $_POST['trangthai'] + 1;
-    }
     
-    // var_dump(($_POST['nhan']));
-    //update lại cột trạng thái sau khi shipper nhận đơn, thành "chờ lấy hàng"    
-    $update = "update donhang set trangthai = '$tt' where madh = '$ma'";
-    $query = mysqli_query($conn,$update);
-    var_dump($tt);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -44,12 +34,12 @@
       <hr class="sidebar-divider">
       
       <li class="nav-item">
-        <a class="nav-link" href="ui-colors.html">
+        <a class="nav-link" href="./nhandon.php">
           <i class="fas fa-edit"></i>
           <span>Nhận đơn hàng</span>
         </a>
       </li>
-      <li class="nav-item">
+      <li class="nav-item active">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseForm" aria-expanded="true" aria-controls="collapseForm">
                     <i class="fab fa-fw fa-wpforms"></i>
                     <span>Quản lý giao hàng</span>
@@ -59,11 +49,11 @@
                         <!-- <h6 class="collapse-header">Forms</h6> -->
                         <a class="collapse-item" href="./chonhanhang.php">Chờ lấy hàng</a>
                         <a class="collapse-item  active" href="./danggiao_shipper.php">Đang giao</a>
-                        <a class="collapse-item" href="form_advanceds.html">Giao thành công</a>
-                        <a class="collapse-item" href="form_advanceds.html">Hoàn hàng</a>
+                        <a class="collapse-item" href="./giaothanhcong.php">Giao thành công</a>
+                        <a class="collapse-item" href="./donhoan_shipper.php">Hoàn hàng</a>
                     </div>
                 </div>
-            </li>
+      </li>
       
       <hr class="sidebar-divider">
       

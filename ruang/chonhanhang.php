@@ -1,14 +1,6 @@
 <?php 
     include("./config/conndb.php"); 
-    //lay ma don hang tu form
-    if(isset($_POST['nhan'])&&($_POST['nhan'])){
-        $ma = $_POST['id'];
-    }
-    // var_dump(($_POST['nhan']));
-    //update lại cột trạng thái sau khi shipper nhận đơn, thành "chờ lấy hàng"    
-    $update = "update donhang set trangthai = '1' where madh = '$ma'";
-    $query = mysqli_query($conn,$update);
-    // var_dump($ma);
+    
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -46,7 +38,7 @@
                     <span>Nhận đơn hàng</span>
                 </a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item active">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseForm" aria-expanded="true" aria-controls="collapseForm">
                     <i class="fab fa-fw fa-wpforms"></i>
                     <span>Quản lý giao hàng</span>
@@ -56,8 +48,8 @@
                         <!-- <h6 class="collapse-header">Forms</h6> -->
                         <a class="collapse-item  active" href="./chonhanhang.php">Chờ lấy hàng</a>
                         <a class="collapse-item" href="./danggiao_shipper.php">Đang giao</a>
-                        <a class="collapse-item" href="form_advanceds.html">Giao thành công</a>
-                        <a class="collapse-item" href="form_advanceds.html">Hoàn hàng</a>
+                        <a class="collapse-item" href="./giaothanhcong.php">Giao thành công</a>
+                        <a class="collapse-item" href="./donhoan_shipper.php">Hoàn hàng</a>
                     </div>
                 </div>
             </li>
@@ -124,7 +116,7 @@
                                     </thead>                               
                                     <tbody>
                                         <?php
-                                            //lấy các dh có trạng thái 'Đang chờ'
+                                          
                                            
                                                 $sql="SELECT * from donhang JOIN khachhang ON donhang.makh=khachhang.makh WHERE trangthai='1'";
                                                 $query = mysqli_query($conn,$sql);	
@@ -134,7 +126,7 @@
                                                 }
                                                 for($j=0;$j<count($row);$j++){                                                
                                         ?>
-                                        <form action="./danggiao_shipper.php" method="post">
+                                        <form action="./updateTrangThai.php" method="post">
                                         <tr>
                                             <td><?php echo $row[$j][0]; ?></td>
                                             <td><?php echo $row[$j][1]; ?></td>
@@ -144,7 +136,7 @@
                                             <td><?php echo $row[$j][5]; ?></td>
                                             <td><?php echo $row[$j][6]; ?></td>      
                                             
-                                            <td> <input type="submit" value="Đã nhận hàng" name="nhan" class="btn btn-warning mb-1"></td>
+                                            <td> <input type="submit" value="Đã nhận hàng" name="dalay" class="btn btn-warning mb-1"></td>
                                             <input type="hidden" name="id" value="<?php echo $row[$j][0]; ?>">
                                             <input type="hidden" name="trangthai" value="<?php echo $row[$j][7]; ?>">
                                         </tr>
