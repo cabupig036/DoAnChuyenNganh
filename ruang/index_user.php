@@ -7,7 +7,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="">
-  <!-- <link href="img/logo/logo.png" rel="icon"> -->
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
   <title>Anyar</title>
   <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
   <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
@@ -27,14 +28,14 @@
       <hr class="sidebar-divider my-0">
      
       <hr class="sidebar-divider">
-     
+      
       <li class="nav-item">
-        <a class="nav-link" href="ui-colors.html">
+        <a class="nav-link" href="./lendon.php">
           <i class="fas fa-edit"></i>
           <span>Lên đơn hàng</span>
         </a>
       </li>
-      <li class="nav-item active">
+      <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseForm" aria-expanded="true"
           aria-controls="collapseForm">
           <i class="fab fa-fw fa-wpforms"></i>
@@ -43,15 +44,15 @@
         <div id="collapseForm" class="collapse" aria-labelledby="headingForm" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <!-- <h6 class="collapse-header">Forms</h6> -->
-            <a class="collapse-item active" href="form_basics.html">Chờ bàn giao</a>
-            <a class="collapse-item" href="form_advanceds.html">Đang giao</a>
-            <a class="collapse-item" href="form_advanceds.html">Hoàn tất</a>
-            <a class="collapse-item" href="form_advanceds.html">Hoàn hàng</a>
-            
+            <a class="collapse-item" href="./chobangiao.php">Chờ bàn giao</a>
+            <a class="collapse-item" href="./cholayhang.php">Chờ lấy hàng</a>
+            <a class="collapse-item" href="./danggiao.php">Đang giao</a>
+            <a class="collapse-item" href="./hoantat.php">Hoàn tất</a>
+            <a class="collapse-item" href="./hoanhang.php">Hoàn hàng</a>
           </div>
         </div>
       </li>
-     
+      
       <hr class="sidebar-divider">
       
     </ul>
@@ -97,74 +98,11 @@
 
         <!-- Container Fluid-->
         <div class="container-fluid" id="container-wrapper">
-       
-            <div class="col-lg-12">
-                <div class="card mb-4">
-                  <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-primary">Chờ bàn giao</h6>
-                  </div>
-                  <div class="table-responsive p-3">
-                    <table class="table align-items-center table-flush" id="dataTable">
-                      <thead class="thead-light">
-                        <tr>
-                          <th>Mã đơn</th>
-                          <th>Thông tin gói hàng</th>
-                          <th>Tiền thu hộ COD</th>
-                          <th>Họ tên bên nhận</th>
-                          <th>Số điện thoại bên nhận</th>
-                          <th>Địa chỉ bên nhận</th>                          
-                        </tr>
-                      </thead>
-                      <!-- <tfoot>
-                        <tr>
-                          <th>Name</th>
-                          <th>Position</th>
-                          <th>Office</th>
-                          <th>Age</th>
-                          <th>Start date</th>
-                          <th>Salary</th>
-                        </tr>
-                      </tfoot> -->
-                      <tbody>
-                        <tr>
-                          <td>Tiger Nixon</td>
-                          <td>System Architect</td>
-                          <td>Edinburgh</td>
-                          <td>61</td>
-                          <td>2011/04/25</td>
-                          <td>$320,800</td>
-                        </tr>
-                        <tr>
-                          <td>Garrett Winters</td>
-                          <td>Accountant</td>
-                          <td>Tokyo</td>
-                          <td>63</td>
-                          <td>2011/07/25</td>
-                          <td>$170,750</td>
-                        </tr>
-                        <tr>
-                          <td>Ashton Cox</td>
-                          <td>Junior Technical Author</td>
-                          <td>San Francisco</td>
-                          <td>66</td>
-                          <td>2009/01/12</td>
-                          <td>$86,000</td>
-                        </tr>
-                        <tr>
-                          <td>Cedric Kelly</td>
-                          <td>Senior Javascript Developer</td>
-                          <td>Edinburgh</td>
-                          <td>22</td>
-                          <td>2012/03/29</td>
-                          <td>$433,060</td>
-                        </tr>
-                        
-                        
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </div>
+         
+
+          <div class="row mb-3">
+           
+          </div>
          
           <!-- Modal Logout -->
           <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabelLogout"
@@ -191,7 +129,7 @@
         </div>
         <!---Container Fluid-->
       </div>
-     
+    
     </div>
   </div>
 

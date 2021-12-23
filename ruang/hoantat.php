@@ -1,3 +1,6 @@
+<?php 
+    include("./config/conndb.php");    
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,8 +10,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="">
-  <link href="assets/img/favicon.png" rel="icon">
-  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+  <!-- <link href="img/logo/logo.png" rel="icon"> -->
   <title>Anyar</title>
   <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
   <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
@@ -28,14 +30,14 @@
       <hr class="sidebar-divider my-0">
      
       <hr class="sidebar-divider">
-      
+     
       <li class="nav-item">
-        <a class="nav-link" href="ui-colors.html">
+        <a class="nav-link" href="./lendon.php">
           <i class="fas fa-edit"></i>
           <span>Lên đơn hàng</span>
         </a>
       </li>
-      <li class="nav-item">
+      <li class="nav-item active">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseForm" aria-expanded="true"
           aria-controls="collapseForm">
           <i class="fab fa-fw fa-wpforms"></i>
@@ -44,14 +46,15 @@
         <div id="collapseForm" class="collapse" aria-labelledby="headingForm" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <!-- <h6 class="collapse-header">Forms</h6> -->
-            <a class="collapse-item" href="chobangiao.html">Chờ bàn giao</a>
-            <a class="collapse-item" href="form_advanceds.html">Đang giao</a>
-            <a class="collapse-item" href="form_advanceds.html">Hoàn tất</a>
-            <a class="collapse-item" href="form_advanceds.html">Hoàn hàng</a>
+            <a class="collapse-item " href="./chobangiao.php">Chờ bàn giao</a>
+            <a class="collapse-item" href="./cholayhang.php">Chờ lấy hàng</a>
+            <a class="collapse-item" href="./danggiao.php">Đang giao</a>
+            <a class="collapse-item active" href="./hoantat.php">Hoàn tất</a>
+            <a class="collapse-item" href="./hoanhang.php">Hoàn hàng</a>
           </div>
         </div>
       </li>
-      
+     
       <hr class="sidebar-divider">
       
     </ul>
@@ -97,10 +100,57 @@
 
         <!-- Container Fluid-->
         <div class="container-fluid" id="container-wrapper">
-         
+          
 
           <div class="row mb-3">
-           
+            <div class="col-lg-12">
+                <div class="card mb-4">
+                  <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">Hoàn tất</h6>
+                  </div>
+                  <div class="table-responsive p-3">
+                    <table class="table align-items-center table-flush" id="dataTable">
+                      <thead class="thead-light">
+                        <tr>
+                          <th>Mã đơn</th>
+                          <th>Thông tin gói hàng</th>
+                          <th>Tiền thu hộ COD</th>
+                          <th>Họ tên bên nhận</th>
+                          <th>Số điện thoại bên nhận</th>
+                          <th>Địa chỉ bên nhận</th>     
+                          <th>Địa chỉ bên gửi</th>
+                          <th></th>                     
+                        </tr>
+                      </thead>
+                      <tbody>
+                      <?php
+                                           
+                        $sql="SELECT * from donhang JOIN khachhang ON donhang.makh=khachhang.makh WHERE trangthai='5'";
+                        $query = mysqli_query($conn,$sql);	
+                        $row = array();
+                        while($data = mysqli_fetch_assoc($query)){
+                          $row[] = array($data['madh'],$data['tendh'],$data['tienthuho'],$data['tenNN'],$data['sdtNN'],$data['diachiNN'],$data['diachi']);
+                        }
+                        for($j=0;$j<count($row);$j++){                                                
+                        ?>
+                        <form action="" method="post">
+                          <tr>                                            
+                            <td><?php echo $row[$j][0]; ?></td>
+                            <td><?php echo $row[$j][1]; ?></td>
+                            <td><?php echo $row[$j][2]; ?></td>
+                            <td><?php echo $row[$j][3]; ?></td>
+                            <td><?php echo $row[$j][4]; ?></td>
+                            <td><?php echo $row[$j][5]; ?></td>
+                            <td><?php echo $row[$j][6]; ?></td>                                               
+                                               
+                          </tr>
+                        </form>    
+                        <?php } ?> 
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
           </div>
          
           <!-- Modal Logout -->
@@ -128,7 +178,7 @@
         </div>
         <!---Container Fluid-->
       </div>
-    
+     
     </div>
   </div>
 

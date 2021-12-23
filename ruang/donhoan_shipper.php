@@ -1,3 +1,4 @@
+<?php include('./config/conndb.php'); ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -30,12 +31,12 @@
       <hr class="sidebar-divider">
       
       <li class="nav-item">
-        <a class="nav-link" href="ui-colors.html">
+        <a class="nav-link" href="./nhandon.php">
           <i class="fas fa-edit"></i>
           <span>Nhận đơn hàng</span>
         </a>
       </li>
-      <li class="nav-item">
+      <li class="nav-item active">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseForm" aria-expanded="true"
           aria-controls="collapseForm">
           <i class="fab fa-fw fa-wpforms"></i>
@@ -44,10 +45,10 @@
         <div id="collapseForm" class="collapse" aria-labelledby="headingForm" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <!-- <h6 class="collapse-header">Forms</h6> -->
-            
-            <a class="collapse-item" href="form_advanceds.html">Đang giao</a>
-            <a class="collapse-item" href="form_advanceds.html">Giao thành công</a>
-            <a class="collapse-item" href="form_advanceds.html">Hoàn hàng</a>
+            <a class="collapse-item " href="./chonhanhang.php">Chờ lấy hàng</a>
+            <a class="collapse-item" href="./donhoan_shipper.php">Đang giao</a>
+            <a class="collapse-item" href="./giaothanhcong.php">Giao thành công</a>
+            <a class="collapse-item active" href="./hoanhang.html">Hoàn hàng</a>
           </div>
         </div>
       </li>
@@ -99,9 +100,54 @@
         <div class="container-fluid" id="container-wrapper">
          
 
-          <div class="row mb-3">
-           
-          </div>
+            <div class="col-lg-12">
+                <div class="card mb-4">
+                  <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">Hoàn hàng</h6>
+                  </div>
+                  <div class="table-responsive p-3">
+                    <table class="table align-items-center table-flush" id="dataTable">
+                      <thead class="thead-light">
+                        <tr>
+                          <th>Mã đơn</th>
+                          <th>Thông tin gói hàng</th>
+                          <th>Tiền thu hộ COD</th>
+                          <th>Họ tên bên nhận</th>
+                          <th>Số điện thoại bên nhận</th>
+                          <th>Địa chỉ bên nhận</th>   
+                          <th>Địa chỉ bên gửi</th>                  
+                        </tr>
+                      </thead>
+                     
+                      <tbody>
+                      <?php
+                        $sql="SELECT * from donhang JOIN khachhang ON donhang.makh=khachhang.makh WHERE trangthai='6'";
+                        $query = mysqli_query($conn,$sql);	
+                        $row = array();
+                        while($data = mysqli_fetch_assoc($query)){
+                          $row[] = array($data['madh'],$data['tendh'],$data['tienthuho'],$data['tenNN'],$data['sdtNN'],$data['diachiNN'],$data['diachi']);
+                        }
+                        for($j=0;$j<count($row);$j++){                                                
+                        ?>
+                        <form action="./updateTrangThai.php" method="post">
+                          <tr>                                            
+                            <td><?php echo $row[$j][0]; ?></td>
+                            <td><?php echo $row[$j][1]; ?></td>
+                            <td><?php echo $row[$j][2]; ?></td>
+                            <td><?php echo $row[$j][3]; ?></td>
+                            <td><?php echo $row[$j][4]; ?></td>
+                            <td><?php echo $row[$j][5]; ?></td>
+                            <td><?php echo $row[$j][6]; ?></td>                                               
+                          </tr>
+                        </form>    
+                        <?php } ?>     
+                        
+                        
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
          
           <!-- Modal Logout -->
           <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabelLogout"
