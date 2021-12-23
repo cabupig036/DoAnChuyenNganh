@@ -50,7 +50,7 @@
 						</span>
 					</div>
 					<div class="container-login100-form-btn">
-						<button onclick="window.location.href='/DoAnChuyenNganh/login-form-v1/Login_v1/Login.php';" class="login100-form-btn">
+						<button onclick="window.location.href='/DoAnWeb/login-form-v1/Login_v1/Login.php';" class="login100-form-btn">
 							Change
 						</button></a>
 					</div>

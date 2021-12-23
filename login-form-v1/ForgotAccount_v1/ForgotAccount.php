@@ -41,13 +41,13 @@
 						</span>
 					</div>
 					<div class="container-login100-form-btn">
-						<button onclick="window.location.href='/DoAnChuyenNganh/login-form-v1/ForgotAccount_v1/ChangeNew.php';" class="login100-form-btn">
+						<button onclick="window.location.href='/DoAnWeb/login-form-v1/ForgotAccount_v1/ChangeNew.php';" class="login100-form-btn">
 							Send Email
 						</button></a>
 					</div>
 
 					<div class="text-center p-t-136">
-						<a class="txt2" href="/DoAnChuyenNganh/login-form-v1/Register_v1/Register.php">
+						<a class="txt2" href="/DoAnWeb/login-form-v1/Register_v1/Register.php">
 							Create your Account
 							<i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
 						</a>
