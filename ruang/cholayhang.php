@@ -119,7 +119,7 @@
                                         <?php
                                             //lấy các sp có trạng thái 'Đang chờ'
                                             //thêm where makh (đăng nhập xong) hoac mashipper (KH voi shipper dung chung trang nay)
-                                                $sql="SELECT * from donhang JOIN khachhang ON donhang.makh=khachhang.makh WHERE trangthai='1' ";
+                                                $sql="SELECT * from donhang JOIN khachhang ON donhang.makh=khachhang.makh WHERE trangthai='1' OR trangthai='2'";
                                                 $query = mysqli_query($conn,$sql);	
                                                 $row = array();
                                                 while($data = mysqli_fetch_assoc($query)){
