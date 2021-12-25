@@ -43,7 +43,7 @@
     //cập nhật lại trạng thái khi đã gửi hàng cho shipper
     if(isset($_POST['guihang'])&&($_POST['guihang'])){
         $ma = $_POST['id'];
-        $tt = $_POST['trangthai'] + 1;
+        $tt = $_POST['trangthai'] + 2;
         $update = "update donhang set trangthai = '$tt' where madh = '$ma'";
         $query = mysqli_query($conn,$update);
         header('location: danggiao.php');
