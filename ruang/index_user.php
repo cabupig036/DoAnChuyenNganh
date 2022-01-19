@@ -1,3 +1,7 @@
+<?php 
+  session_start(); 
+  include("./config/conndb.php");
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -30,7 +34,7 @@
       <hr class="sidebar-divider">
       
       <li class="nav-item">
-        <a class="nav-link" href="./lendon.php">
+        <a class="nav-link" href="./lendon_user.php">
           <i class="fas fa-edit"></i>
           <span>Lên đơn hàng</span>
         </a>
@@ -44,16 +48,22 @@
         <div id="collapseForm" class="collapse" aria-labelledby="headingForm" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <!-- <h6 class="collapse-header">Forms</h6> -->
-            <a class="collapse-item" href="./chobangiao.php">Chờ bàn giao</a>
-            <a class="collapse-item" href="./cholayhang.php">Chờ lấy hàng</a>
-            <a class="collapse-item" href="./danggiao.php">Đang giao</a>
-            <a class="collapse-item" href="./hoantat.php">Hoàn tất</a>
-            <a class="collapse-item" href="./hoanhang.php">Hoàn hàng</a>
+            <a class="collapse-item" href="./chobangiao_user.php">Chờ bàn giao</a>
+            <a class="collapse-item" href="./cholayhang_user.php">Chờ lấy hàng</a>
+            <a class="collapse-item" href="./danggiao_user.php">Đang giao</a>
+            <a class="collapse-item" href="./hoantat_user.php">Hoàn tất</a>
+            <a class="collapse-item" href="./hoanhang_user.php">Hoàn hàng</a>
           </div>
         </div>
       </li>
-      
       <hr class="sidebar-divider">
+      <li class="nav-item">
+        <a class="nav-link " href="./doisoat_user.php">
+          <i class="fas fa-fw fa-columns"></i>
+          <span>Đối soát</span>
+        </a>
+      </li>
+      
       
     </ul>
     <!-- Sidebar -->
@@ -70,23 +80,24 @@
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">
                 <img class="img-profile rounded-circle" src="img/boy.png" style="max-width: 60px">
-                <span class="ml-2 d-none d-lg-inline text-white small">Maman Ketoprak</span>
+                <?php if(isset($_SESSION['email'])){
+                    $email = $_SESSION['email'];
+                    $selectMa = "SELECT * FROM `user` WHERE email= '$email'";
+                    $query = mysqli_query($conn,$selectMa);
+                    $kh = mysqli_fetch_assoc($query);
+                    $ma= $kh['ma'];
+                    $ten = $kh['hoten'];
+                    ?>
+                    <span class="ml-2 d-none d-lg-inline text-white small"><?php echo $ten; ?></span>
+                    <?php 
+                                   
+                    // var_dump($ma);
+                    // echo $ma['diachi'];
+                   } 
+                  ?>
               </a>
               <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                <a class="dropdown-item" href="#">
-                  <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Profile
-                </a>
-                <a class="dropdown-item" href="#">
-                  <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Settings
-                </a>
-                <a class="dropdown-item" href="#">
-                  <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Activity Log
-                </a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="javascript:void(0);" data-toggle="modal" data-target="#logoutModal">
+              <a class="dropdown-item" href="./logout.php" >
                   <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                   Logout
                 </a>
@@ -101,6 +112,7 @@
          
 
           <div class="row mb-3">
+            
            
           </div>
          

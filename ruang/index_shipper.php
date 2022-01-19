@@ -1,3 +1,7 @@
+<?php 
+    session_start();
+    include('./config/conndb.php'); 
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -30,9 +34,9 @@
             <hr class="sidebar-divider">
 
             <li class="nav-item">
-                <a class="nav-link" href="./nhandon.php">
+                <a class="nav-link" href="./donduocgiao_shipper.php">
                     <i class="fas fa-edit"></i>
-                    <span>Nhận đơn hàng</span>
+                    <span>Đơn được giao</span>
                 </a>
             </li>
             <li class="nav-item">
@@ -43,9 +47,9 @@
                 <div id="collapseForm" class="collapse" aria-labelledby="headingForm" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <!-- <h6 class="collapse-header">Forms</h6> -->
-                        <a class="collapse-item" href="./chonhanhang.php">Chờ lấy hàng</a>
+                        <a class="collapse-item" href="./chonhanhang_shipper.php">Chờ lấy hàng</a>
                         <a class="collapse-item" href="./danggiao_shipper.php">Đang giao</a>
-                        <a class="collapse-item" href="./giaothanhcong.php">Giao thành công</a>
+                        <a class="collapse-item" href="./giaothanhcong_shipper.php">Giao thành công</a>
                         <a class="collapse-item" href="./donhoan_shipper.php">Hoàn hàng</a>
                     </div>
                 </div>
@@ -67,22 +71,27 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <img class="img-profile rounded-circle" src="img/boy.png" style="max-width: 60px">
-                                <span class="ml-2 d-none d-lg-inline text-white small">Maman Ketoprak</span>
+                                <?php if(isset($_SESSION['email'])){
+                                    $email = $_SESSION['email'];
+                                    $selectMa = "SELECT * FROM `user` WHERE email= '$email'";
+                                    $query = mysqli_query($conn,$selectMa);
+                                    $kh = mysqli_fetch_assoc($query);
+                                    $ma= $kh['ma'];
+                                    $ten = $kh['hoten'];
+                                    ?>
+                                    <span class="ml-2 d-none d-lg-inline text-white small"><?php echo $ten; ?></span>
+                                    <?php 
+                                   
+                                    // var_dump($ma);
+                                    // echo $ma['diachi'];
+                                    } 
+                                ?>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i> Profile
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i> Settings
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i> Activity Log
-                                </a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="javascript:void(0);" data-toggle="modal" data-target="#logoutModal">
-                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i> Logout
-                                </a>
+                            <a class="dropdown-item" href="./logout.php" >
+                            <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                            Logout
+                            </a>
                             </div>
                         </li>
                     </ul>
