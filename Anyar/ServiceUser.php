@@ -137,6 +137,11 @@
   </section><!-- End Hero -->
 
   <main id="main">
+<<<<<<< HEAD
+<section>
+    
+</section>
+=======
 
     <!-- ======= Icon Boxes Section ======= -->
     <section id="icon-boxes" class="icon-boxes">
@@ -144,6 +149,7 @@
     </section><!-- End Icon Boxes Section -->
 
 
+>>>>>>> Thuy
     <!-- ======= Services Section ======= -->
     <section id="services" class="services">
       <div class="container" data-aos="fade-up">

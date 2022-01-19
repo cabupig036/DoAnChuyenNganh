@@ -143,7 +143,11 @@
       
     </section><!-- End Icon Boxes Section -->
 
+<<<<<<< HEAD
+    
+=======
 
+>>>>>>> Thuy
     <!-- ======= Team Section ======= -->
     <section id="team" class="team section-bg">
       <div class="container" data-aos="fade-up">
@@ -228,7 +232,11 @@
       </div>
     </section><!-- End Team Section -->
 
+<<<<<<< HEAD
+    
+=======
    
+>>>>>>> Thuy
 
   </main><!-- End #main -->
 
