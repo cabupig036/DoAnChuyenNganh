@@ -135,7 +135,7 @@
 
 		//Kiểm tra dữ liệu có bị trùng không
 		// Thực thi câu truy vấn
-		$sql = "SELECT * FROM  `users` WHERE  email = '$email'";
+		$sql = "SELECT * FROM  `user` WHERE  email = '$email'";
 		echo $sql;
 		$result = mysqli_query($conn, $sql);
 		//Nếu kết quả trả về lớn hơn 1 thì nghĩa là name hoặc email đã tồn tại trong CSDL
@@ -144,8 +144,8 @@
 			die();
 		} else {
 			// Ngược lại thì thêm bình thường
-			$sql   = "INSERT into `users` (name, email,password , phone, address)
-		VALUES ('$name', '$email', '" . md5($password) . "', '$phone', '$address')";
+			$sql   = "INSERT INTO `user` (`ma`, `hoten`, `sdt`, `email`, `password`, `diachi`, `role`)
+			 VALUES (NULL, '$name', '$phone', '$email', '" . md5($password) . "', '$address', '1');";
 
 			if (mysqli_query($conn, $sql)) {
 				session_start();

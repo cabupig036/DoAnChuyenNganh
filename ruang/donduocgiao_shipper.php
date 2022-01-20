@@ -33,7 +33,7 @@
 
             <hr class="sidebar-divider">
 
-            <li class="nav-item">
+            <li class="nav-item active">
                 <a class="nav-link" href="./donduocgiao_shipper.php">
                     <i class="fas fa-edit"></i>
                     <span>Đơn được giao</span>
@@ -47,7 +47,7 @@
                 <div id="collapseForm" class="collapse" aria-labelledby="headingForm" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <!-- <h6 class="collapse-header">Forms</h6> -->
-                        <a class="collapse-item" href="./chonhanhang_shipper.php">Chờ lấy hàng</a>
+                        <a class="collapse-item " href="./chonhanhang_shipper.php">Chờ lấy hàng</a>
                         <a class="collapse-item" href="./danggiao_shipper.php">Đang giao</a>
                         <a class="collapse-item" href="./giaothanhcong_shipper.php">Giao thành công</a>
                         <a class="collapse-item" href="./donhoan_shipper.php">Hoàn hàng</a>
@@ -89,9 +89,9 @@
                             </a>
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
                             <a class="dropdown-item" href="./logout.php" >
-                            <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                            Logout
-                            </a>
+                                <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                Logout
+                                </a>
                             </div>
                         </li>
                     </ul>
@@ -102,8 +102,69 @@
                 <div class="container-fluid" id="container-wrapper">
 
 
-                    <div class="row mb-3">
-
+                    <div class="col-lg-12">
+                        <div class="card mb-4">
+                            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                <h6 class="m-0 font-weight-bold text-primary">Đơn được giao</h6>
+                            </div>
+                            <div class="table-responsive p-3">
+                                <table class="table align-items-center table-flush" id="dataTable">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th></th>
+                                            <th>Mã đơn</th>
+                                            <th>Thông tin gói hàng</th>
+                                            <th>Tiền thu hộ COD</th>
+                                            <th>Họ tên bên nhận</th>
+                                            <th>Số điện thoại bên nhận</th>
+                                            <th>Địa chỉ bên nhận</th>
+                                            <th>Địa chỉ bên gửi</th>
+                                            <th>Ghi chú</th>
+                                            
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php
+                                        //lấy các sp có trạng thái 'Đang chờ'
+                                        
+                                        $sql="SELECT * from donhang JOIN user ON donhang.makh=user.ma WHERE mashipper = '$ma' AND  trangthai='1'";
+                                            $query = mysqli_query($conn,$sql);	
+                                            $row = array();
+                                            while($data = mysqli_fetch_assoc($query)){
+                                                $row[] = array($data['madh'],$data['tensp'],$data['tienthuho'],$data['tenNN'],$data['sdtNN'],$data['diachiNN'],$data['diachi'],$data['img'],$data['goicuoc'],$data['tuychon'],$data['ghichu'],$data['hinhthuc']);
+                                            }
+                                            for($j=0;$j<count($row);$j++){                                         
+                                                if($row[$j][9]=="Bên nhận trả phí"){
+                                                       $tien = $row[$j][8] + $row[$j][2];
+                                                }else{
+                                                    $tien = $row[$j][2];
+                                                }  
+                                                if($row[$j][11]=="Lấy hàng tận nơi"){
+                                                    $dc = $row[$j][6];
+                                                }else{
+                                                    $dc = "Tại bưu cục";
+                                                }
+                                                         
+                                        ?>
+                                        <form action="./updateTrangThai.php" method="post">
+                                            <tr> 
+                                                <td><img src="./img/<?php echo $row[$j][7]; ?>" alt=""style="width: 60px; height: 60px;"> </td>                                           
+                                                <td><?php echo $row[$j][0]; ?></td>
+                                                <td><?php echo $row[$j][1]; ?></td>
+                                                <td><?php echo $tien; ?></td>
+                                                <td><?php echo $row[$j][3]; ?></td>
+                                                <td><?php echo $row[$j][4]; ?></td>
+                                                <td><?php echo $row[$j][5]; ?></td>
+                                                <td><?php echo $dc; ?></td> 
+                                                <td><?php echo $row[$j][10]; ?></td>                                              
+                                               
+                                            </tr>
+                                        </form>    
+                                        <?php } ?>                                
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
 
                     <!-- Modal Logout -->

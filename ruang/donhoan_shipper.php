@@ -1,4 +1,7 @@
-<?php include('./config/conndb.php'); ?>
+<?php 
+    session_start();
+    include('./config/conndb.php'); 
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -31,9 +34,9 @@
       <hr class="sidebar-divider">
       
       <li class="nav-item">
-        <a class="nav-link" href="./nhandon.php">
+        <a class="nav-link" href="./donduocgiao_shipper.php">
           <i class="fas fa-edit"></i>
-          <span>Nhận đơn hàng</span>
+          <span>Đơn được giao</span>
         </a>
       </li>
       <li class="nav-item active">
@@ -45,10 +48,10 @@
         <div id="collapseForm" class="collapse" aria-labelledby="headingForm" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <!-- <h6 class="collapse-header">Forms</h6> -->
-            <a class="collapse-item " href="./chonhanhang.php">Chờ lấy hàng</a>
-            <a class="collapse-item" href="./donhoan_shipper.php">Đang giao</a>
-            <a class="collapse-item" href="./giaothanhcong.php">Giao thành công</a>
-            <a class="collapse-item active" href="./hoanhang.html">Hoàn hàng</a>
+            <a class="collapse-item " href="./chonhanhang_shipper.php">Chờ lấy hàng</a>
+            <a class="collapse-item" href="./danggiao_shipper.php">Đang giao</a>
+            <a class="collapse-item" href="./giaothanhcong_shipper.php">Giao thành công</a>
+            <a class="collapse-item active" href="./donhoan_shipper.php">Hoàn hàng</a>
           </div>
         </div>
       </li>
@@ -70,23 +73,25 @@
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">
                 <img class="img-profile rounded-circle" src="img/boy.png" style="max-width: 60px">
-                <span class="ml-2 d-none d-lg-inline text-white small">Maman Ketoprak</span>
+                <?php if(isset($_SESSION['email'])){
+                    $email = $_SESSION['email'];
+                    $selectMa = "SELECT * FROM `user` WHERE email= '$email'";
+                    $query = mysqli_query($conn,$selectMa);
+                    $kh = mysqli_fetch_assoc($query);
+                    $ma= $kh['ma'];
+                    $ten = $kh['hoten'];
+                    ?>
+                    <span class="ml-2 d-none d-lg-inline text-white small"><?php echo $ten; ?></span>
+                    <?php 
+                                   
+                    // var_dump($ma);
+                    // echo $ma['diachi'];
+                    } 
+                ?>
               </a>
               <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                <a class="dropdown-item" href="#">
-                  <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Profile
-                </a>
-                <a class="dropdown-item" href="#">
-                  <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Settings
-                </a>
-                <a class="dropdown-item" href="#">
-                  <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Activity Log
-                </a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="javascript:void(0);" data-toggle="modal" data-target="#logoutModal">
+                
+                <a class="dropdown-item" href="./logout.php" >
                   <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                   Logout
                 </a>
@@ -109,35 +114,42 @@
                     <table class="table align-items-center table-flush" id="dataTable">
                       <thead class="thead-light">
                         <tr>
-                          <th>Mã đơn</th>
-                          <th>Thông tin gói hàng</th>
-                          <th>Tiền thu hộ COD</th>
-                          <th>Họ tên bên nhận</th>
-                          <th>Số điện thoại bên nhận</th>
-                          <th>Địa chỉ bên nhận</th>   
-                          <th>Địa chỉ bên gửi</th>                  
+                            <th></th>
+                            <th>Mã đơn</th>
+                            <th>Thông tin gói hàng</th>
+                            <th>Tiền thu hộ COD</th>
+                            <th>Họ tên bên nhận</th>
+                            <th>Số điện thoại bên nhận</th>
+                            <th>Địa chỉ bên nhận</th>                           
+                            <th>Ghi chú</th>                
                         </tr>
                       </thead>
                      
                       <tbody>
                       <?php
-                        $sql="SELECT * from donhang JOIN khachhang ON donhang.makh=khachhang.makh WHERE trangthai='6'";
+                        $sql="SELECT * from donhang JOIN user ON donhang.makh=user.ma WHERE mashipper = '$ma' AND  trangthai='6'";
                         $query = mysqli_query($conn,$sql);	
                         $row = array();
                         while($data = mysqli_fetch_assoc($query)){
-                          $row[] = array($data['madh'],$data['tendh'],$data['tienthuho'],$data['tenNN'],$data['sdtNN'],$data['diachiNN'],$data['diachi']);
+                            $row[] = array($data['madh'],$data['tensp'],$data['tienthuho'],$data['tenNN'],$data['sdtNN'],$data['diachiNN'],$data['diachi'],$data['img'],$data['goicuoc'],$data['tuychon'],$data['ghichu'],$data['hinhthuc'],$data['trangthai']);
                         }
-                        for($j=0;$j<count($row);$j++){                                                
+                        for($j=0;$j<count($row);$j++){                                         
+                            if($row[$j][9]=="Bên nhận trả phí"){
+                                   $tien = $row[$j][8] + $row[$j][2];
+                            }else{
+                                $tien = $row[$j][2];
+                            }                                                    
                         ?>
                         <form action="./updateTrangThai.php" method="post">
                           <tr>                                            
+                            <td><img src="./img/<?php echo $row[$j][7]; ?>" alt=""style="width: 60px; height: 60px;"> </td>                                           
                             <td><?php echo $row[$j][0]; ?></td>
                             <td><?php echo $row[$j][1]; ?></td>
-                            <td><?php echo $row[$j][2]; ?></td>
+                            <td><?php echo $tien; ?></td>
                             <td><?php echo $row[$j][3]; ?></td>
                             <td><?php echo $row[$j][4]; ?></td>
-                            <td><?php echo $row[$j][5]; ?></td>
-                            <td><?php echo $row[$j][6]; ?></td>                                               
+                            <td><?php echo $row[$j][5]; ?></td>                            
+                            <td><?php echo $row[$j][10]; ?></td>                                               
                           </tr>
                         </form>    
                         <?php } ?>     
